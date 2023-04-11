@@ -38,6 +38,10 @@ running in localhost:9092 (default)
 4. Create topic kafka   
 This topic is used for retry process if there is an error when insert data to database. Create topic with this command
     > bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic registration.notification.retry
+
+    You can check topic list with
+    > bin/kafka-topics.sh --bootstrap-server=localhost:9092 --list
+
 5. Run service with command
     > go run main.go
 
@@ -68,4 +72,4 @@ This topic is used for retry process if there is an error when insert data to da
             "timestamp":"2022-01-01 22:10:44"
         }
     ]
-}
+    }
