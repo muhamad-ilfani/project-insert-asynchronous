@@ -22,7 +22,11 @@ Make sure user has access to create schema and table. This service will automath
  Or you can directly create schema with name "servicea" and table with name "users"
 
 ## Kafka Setting
-running in localhost:9092 (default)
+Please see .env file. Default value as follow :
+>BROKER_HOST=localhost
+BROKER_PORT=9092
+
+Change above configuration based on your local connection for Kafka.
 
 ## How to Run
 1. Clone this repository with

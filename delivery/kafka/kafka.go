@@ -2,6 +2,8 @@ package kafka
 
 import (
 	"context"
+	"fmt"
+	"os"
 	"project2/usecases"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
@@ -58,8 +60,10 @@ func InitSubscriptions(
 }
 
 func subscribe(ctx context.Context, group, topic string, autoCommit bool, h handler, messages chan<- *kafka.Message) error {
+	brokerAddr := fmt.Sprintf("%s:%s", os.Getenv("BROKER_HOST"), os.Getenv("BROKER_PORT"))
+
 	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers":    "localhost:9092",
+		"bootstrap.servers":    brokerAddr,
 		"group.id":             group,
 		"max.poll.interval.ms": 30 * 1000 * 60, // 30 minutes
 		"enable.auto.commit":   autoCommit,
