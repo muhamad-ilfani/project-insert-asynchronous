@@ -40,3 +40,32 @@ This topic is used for retry process if there is an error when insert data to da
     > bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic registration.notification.retry
 5. Run service with command
     > go run main.go
+
+6. Make sure service is running in port 8000 with command
+    > curl -X GET localhost:8000/
+
+    Response :
+    > {"message":"welcome"}
+7. You can insert data to DB with API : localhost:8000/register
+
+    payload: 
+    
+    {
+    "request_id":123456,
+    "data" : [
+        {
+            "id":12345,
+            "customer":"test1",
+            "quantity":1,
+            "price":10.00,
+            "timestamp":"2022-01-01 22:10:44"
+        },
+        {
+            "id":12346,
+            "customer":"test2",
+            "quantity":2,
+            "price":20.00,
+            "timestamp":"2022-01-01 22:10:44"
+        }
+    ]
+}

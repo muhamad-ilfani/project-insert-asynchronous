@@ -30,8 +30,8 @@ func RegisterUser(ctx context.Context, uc usecases.UserUseCase) echo.HandlerFunc
 		}
 
 		return c.JSON(http.StatusCreated, map[string]interface{}{
-			"message": SuccessMsg,
-			"data":    form.RequestID,
+			"message":   SuccessMsg,
+			"RequestID": form.RequestID,
 		})
 	}
 }
