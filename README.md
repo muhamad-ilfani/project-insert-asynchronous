@@ -23,7 +23,7 @@ Make sure user has access to create schema and table. This service will automath
 
 ## Kafka Setting
 Please see .env file. Default value as follow :
->BROKER_HOST=localhost
+>BROKER_HOST=localhost  
 BROKER_PORT=9092
 
 Change above configuration based on your local connection for Kafka.
