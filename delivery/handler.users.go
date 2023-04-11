@@ -22,12 +22,11 @@ func RegisterUser(ctx context.Context, uc usecases.UserUseCase) echo.HandlerFunc
 			})
 		}
 
-		for _, req := range form.Data {
-			go func(request usecases.RegisterUserData) {
-				uc.RegisterUser(ctx, request)
-
-			}(req)
-		}
+		go func() {
+			for _, req := range form.Data {
+				uc.RegisterUser(ctx, req)
+			}
+		}()
 
 		return c.JSON(http.StatusCreated, map[string]interface{}{
 			"message":   SuccessMsg,
