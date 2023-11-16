@@ -16,11 +16,11 @@ func (ox *App) initKafka() error {
 		"bootstrap.servers": brokerAddr,
 	}
 
-	ox.kafkaConsumer, err = kafka.NewConsumer(&kafka.ConfigMap{
+	/*ox.kafkaConsumer, err = kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers":    brokerAddr,
 		"group.id":             "project2",
 		"max.poll.interval.ms": 30 * 1000 * 60, // 30 minutes
-	})
+	})*/
 
 	if err != nil {
 		return err

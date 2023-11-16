@@ -25,4 +25,5 @@ type RegisterUserData struct {
 	Quantity  int64   `json:"quantity"`
 	Price     float64 `json:"price"`
 	TimeStamp string  `json:"timestamp"`
+	IsRetry   bool    `json:"is_retry"`
 }

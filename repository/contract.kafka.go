@@ -18,6 +18,7 @@ type NotifyRegistrationRequest struct {
 	Quantity  int64
 	Price     float64
 	TimeStamp time.Time
+	IsRetry   bool
 }
 
 type NotifyRegistrationResponse struct{}

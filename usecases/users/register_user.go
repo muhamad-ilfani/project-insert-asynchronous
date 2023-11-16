@@ -15,6 +15,7 @@ func (x *usecase) RegisterUser(
 	res usecases.RegisterUserResponse, httpcode int, err error,
 ) {
 	var timeX time.Time
+	var isRetry bool = false
 
 	ctx, cancel := context.WithTimeout(ctx, x.Configuration.Timeout)
 	defer cancel()
@@ -27,20 +28,25 @@ func (x *usecase) RegisterUser(
 	}
 
 	defer func() {
-		if err != nil {
-			//log.Err(err).Msg("Error Register")
+		if err != nil || isRetry == true {
 			kafkaMessage := repository.NotifyRegistrationRequest{
 				ID:        req.ID,
 				Customer:  req.Customer,
 				Quantity:  req.Quantity,
 				Price:     req.Price,
 				TimeStamp: timeX,
+				IsRetry:   false,
 			}
 			if err = x.KafkaProducer.NotifyRegistration(ctx, kafkaMessage); err != nil {
 				log.Err(err).Msg("Error Notify")
 			}
 		}
 	}()
+
+	if req.IsRetry == true {
+		isRetry = req.IsRetry
+		return res, httpcode, err
+	}
 
 	layoutFormat := "2006-01-02 15:04:05"
 
@@ -58,7 +64,8 @@ func (x *usecase) RegisterUser(
 
 	_, httpcode, err = userPG.RegisterUser(ctx, request)
 	if err != nil {
-
+		isRetry = true
+		log.Err(err).Msg("Error Notify")
 		return res, httpcode, err
 	}
 

@@ -20,6 +20,8 @@ func callBackRegistration(ctx context.Context, uc usecases.UserUseCase) handler 
 
 			}
 
+			//fmt.Printf("Subscribe %v", payload)
+
 			uc.RegisterUser(ctx, payload)
 		}()
 

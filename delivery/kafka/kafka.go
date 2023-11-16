@@ -27,7 +27,7 @@ func InitSubscriptions(
 	ctx context.Context,
 	features Usecase,
 ) (err error) {
-	messages := make(chan *kafka.Message, 1000)
+	messages := make(chan *kafka.Message, 1)
 
 	subscribers := []SubcribeParams{
 		{
@@ -40,6 +40,7 @@ func InitSubscriptions(
 
 	for _, subcriber := range subscribers {
 		go func() error {
+			fmt.Println("Consumer Subscribe")
 			err = subscribe(
 				ctx,
 				subcriber.Group,
@@ -65,7 +66,7 @@ func subscribe(ctx context.Context, group, topic string, autoCommit bool, h hand
 	consumer, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers":    brokerAddr,
 		"group.id":             group,
-		"max.poll.interval.ms": 30 * 1000 * 60, // 30 minutes
+		"max.poll.interval.ms": 1 * 60 * 1000, //30 * 1000 * 60, // 30 minutes
 		"enable.auto.commit":   autoCommit,
 	})
 
@@ -98,7 +99,7 @@ func subscribe(ctx context.Context, group, topic string, autoCommit bool, h hand
 		case <-ctx.Done():
 			return err
 		case messages <- msg:
-			log.Printf("message fetched and sent to a channel: %v \n", string(msg.Value))
+			//log.Printf("message fetched and sent to a channel: %v \n", string(msg.Value))
 		}
 
 		err = h(consumer, msg)
